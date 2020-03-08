@@ -146,3 +146,19 @@
   color: white;
 }
 /* end footer section*/
+.hover-shadow {
+  transition: 0.3s;
+}
+
+.hover-shadow:hover {
+  box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.2), 0 30px 50px 0 rgba(0, 0, 0, 0.19);
+}
+.shadow-custom{
+  box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)
+}
+.carousel{
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 10px 5px 5px 0 rgba(0, 0, 0, 0.3)
+}
+body {
+  background-color: rgb(255, 238, 218);
+}

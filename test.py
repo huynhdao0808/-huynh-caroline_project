@@ -36,12 +36,29 @@ def crawl_rating(URL):
             pass
     return movies_list
 
-movie = {}
-soup = get_URL("https://moveek.com/en/phim/the-invisible-man/")
-try:
-    movie["gerne"] = soup.find(class_= "mb-0 text-muted text-truncate").string.strip().strip("-").strip()
-    movie["description"] = soup.find(class_ = "mb-3 text-justify").text
-    movie["rating"] = soup.find(href="/en/review/the-invisible-man/").text.strip()
-except:
-    pass
-print(movie)
+soup = get_URL("https://www.hbo.com/series")
+#print(soup.prettify()[10000:20000])
+movie_list = []
+movies = soup.find_all(class_="components/Card--card components/Card--promotional components/Card--withBottomBorder")
+for movie in movies:
+    _movie = {}
+    _movie["title"] = movie.find(class_="components/CardText--title").string
+    _movie["link"] = "https://www.hbo.com"+movie["href"]
+    _movie["img"] = "https://www.hbo.com"+movie.find(class_="components/CardImage--imageContainer").img["src"]
+    try:
+        _movie["description"] = movie.find(class_="components/CardText--details").p.string
+        _movie["show_time"] = movie.find(class_="components/CardText--contextualLabel").string
+    except:
+        pass
+    movie_list.append(_movie)
+#print(movies.prettify())
+for movie in movie_list:
+    print(movie)
+
+#for mo in movies:
+#    vie = {}
+ #   if movie.img:
+  #      _movie["title"] = movie["title"]
+   #     _movie["link"] = movie["href"]
+    #    _movie["img"] = movie.img["data-src"]
+     #   movies_list.append(_movie)
