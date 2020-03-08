@@ -1,10 +1,5 @@
-from flask import Flask, render_template
-
 import requests
 from bs4 import BeautifulSoup, re
-
-
-app = Flask(__name__)
 
 BASE_URL = "https://moveek.com/en/" 
 
@@ -33,20 +28,20 @@ def crawl_rating(URL):
     movies_list = crawl_moveek(URL)
     for i in range(len(movies_list)):
         movie = movies_list[i]
-        soup = get_URL("https://moveek.com"+movie["link"])
+        soup = get_URL("https://www.google.com/search?q="+movie["title"])
         try:
-            movie["gerne"] = soup.find(class_= "mb-0 text-muted text-truncate").string.strip().strip("-").strip()
-            movie["description"] = soup.find(class_ = "mb-3 text-justify").text
-            movie["rating"] = soup.find(href="/en/review/the-invisible-man/").text.strip()
+            movie["imdb_URL"] = soup.find(href=re.compile("imdb"))["href"].strip("/url?q=").split("&")[0]
+            movie["rotten_URL"] = soup.find(href=re.compile("rotten"))["href"].strip("/url?q=").split("&")[0]
         except:
             pass
     return movies_list
 
-@app.route('/')
-def index():
-  data = crawl_rating(BASE_URL)
-  return render_template('home.html',data=data)
-
-if __name__ == '__main__':
-  app.run(host='0.0.0.0', port=5000, debug=True)
- 
+movie = {}
+soup = get_URL("https://moveek.com/en/phim/the-invisible-man/")
+try:
+    movie["gerne"] = soup.find(class_= "mb-0 text-muted text-truncate").string.strip().strip("-").strip()
+    movie["description"] = soup.find(class_ = "mb-3 text-justify").text
+    movie["rating"] = soup.find(href="/en/review/the-invisible-man/").text.strip()
+except:
+    pass
+print(movie)
