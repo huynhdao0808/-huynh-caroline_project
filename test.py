@@ -62,3 +62,4 @@ for movie in movie_list:
    #     _movie["link"] = movie["href"]
     #    _movie["img"] = movie.img["data-src"]
      #   movies_list.append(_movie)
+    
