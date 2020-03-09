@@ -67,6 +67,10 @@ def crawl_hbo(URL):
     return movie_list
 
 @app.route('/')
+def home():
+  return render_template('home.html')
+
+@app.route('/movies')
 def movies():
   data=crawl_rating_moveek(MOVEEK_URL)
   return render_template('movies.html', data=data)
